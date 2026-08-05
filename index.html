@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>高中化学必修一·第一章 精密交互实验室</title>
+<style>
+:root{--bg:#0b1120;--card:#ffffff;--pri:#3b82f6;--sec:#06b6d4;--acc:#f59e0b;--txt:#1e293b;--sub:#64748b;}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'PingFang SC','Microsoft YaHei',system-ui,sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;padding-bottom:60px}
+header{text-align:center;padding:32px 16px 12px;color:#fff}
+header h1{font-size:26px;letter-spacing:1px;background:linear-gradient(90deg,#60a5fa,#22d3ee);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+header p{color:#94a3b8;font-size:13px;margin-top:8px}
+nav{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;padding:10px 12px;position:sticky;top:0;z-index:10;background:rgba(11,17,32,.92);backdrop-filter:blur(8px)}
+.tab{border:none;cursor:pointer;padding:9px 18px;border-radius:20px;font-size:13px;background:#1e293b;color:#cbd5e1;transition:.2s}
+.tab:hover{background:#334155}.tab.on{background:linear-gradient(135deg,var(--pri),var(--sec));color:#fff;box-shadow:0 4px 15px rgba(59,130,246,.4)}
+.panel{display:none;max-width:960px;margin:20px auto;padding:0 12px}.panel.on{display:block;animation:up .35s ease}
+@keyframes up{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.card{background:var(--card);border-radius:14px;padding:20px;box-shadow:0 8px 30px rgba(0,0,0,.3);margin-bottom:16px}
+.card h2{font-size:17px;color:#1e40af;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.badge{font-size:11px;background:#dbeafe;color:#1e40af;padding:2px 8px;border-radius:10px;font-weight:600}
+.goal{background:#eff6ff;border-left:3px solid var(--pri);padding:8px 12px;border-radius:6px;font-size:12px;color:#1e3a8a;margin-bottom:12px;line-height:1.7}
+canvas{display:block;margin:0 auto;background:#f8fafc;border-radius:10px;border:1px solid #e2e8f0;max-width:100%;cursor:crosshair}
+.btns{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin:10px 0}
+.btn{border:none;cursor:pointer;padding:7px 15px;border-radius:18px;background:#e2e8f0;font-size:12px;transition:.2s;user-select:none}
+.btn:hover{background:#cbd5e1}.btn.pri{background:linear-gradient(135deg,var(--pri),var(--sec));color:#fff}
+.btn.on{background:#16a34a;color:#fff}.btn.sel{outline:2px solid var(--acc);outline-offset:1px}
+.btn.warn{background:#fef3c7;color:#92400e;border:1px solid #fcd34d}
+.info{margin-top:10px;padding:10px 14px;border-radius:8px;font-size:13px;line-height:1.8;min-height:36px}
+.info.blue{background:#eff6ff;border-left:3px solid var(--pri);color:#1e3a8a}
+.info.amber{background:#fffbeb;border-left:3px solid var(--acc);color:#78350f}
+.info.green{background:#f0fdf4;border-left:3px solid #22c55e;color:#14532d}
+.info.red{background:#fef2f2;border-left:3px solid #ef4444;color:#991b1b}
+.eqbox{background:#0f172a;color:#7dd3fc;border-radius:8px;padding:10px 14px;font:14px Consolas,'Courier New',monospace;margin-top:8px;min-height:38px;line-height:1.7}
+.steps .step{display:none;background:#f8fafc;border-left:3px solid var(--pri);border-radius:6px;padding:8px 12px;margin:5px 0;font-size:13px;line-height:1.8;animation:up .3s}
+.steps .step.show{display:block}
+.spect{color:#94a3b8;text-decoration:line-through}.hl{color:#dc2626;font-weight:700}
+details{background:#f1f5f9;border-radius:8px;margin:5px 0;padding:8px 12px}
+summary{font-weight:600;color:#1e40af;cursor:pointer;font-size:13px}
+details details{background:#fff;margin-left:16px;margin-top:4px}
+.node{cursor:pointer}.node:hover{background:#dbeafe;border-radius:4px;padding:0 4px}
+footer{text-align:center;color:#475569;font-size:11px;margin-top:28px;padding:10px}
+@media(max-width:640px){header h1{font-size:20px}.tab{padding:7px 12px;font-size:12px}}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>⚗️ 必修一·第一章 精密交互实验室</h1>
+  <p>人教版2019 ｜ 实验1-1 · 实验1-2 · 实验1-3 · 氧化还原分析 ｜ 点击操作，观察现象，理解本质</p>
+</header>
+
+<nav>
+  <button class="tab on" data-t="t1" onclick="go('t1')">📦 1.1 物质分类</button>
+  <button class="tab" data-t="t2" onclick="go('t2')">🔬 实验1-1 胶体制备与丁达尔</button>
+  <button class="tab" data-t="t3" onclick="go('t3')">💡 实验1-2 电解质导电</button>
+  <button class="tab" data-t="t4" onclick="go('t4')">🧫 实验1-3 离子反应</button>
+  <button class="tab" data-t="t5" onclick="go('t5')">⚡ 1.3 氧化还原反应</button>
+</nav>
+
+<!-- ========== 1.1 物质分类 ========== -->
+<section class="panel on" id="t1">
+<div class="card">
+  <h2>🗂️ 物质的分类 <span class="badge">树状分类法 + 交叉分类法</span></h2>
+  <div class="goal">🎯 学习目标：掌握树状分类法的层次结构；理解交叉分类法的多角度视角；点击任意节点查看详细说明。</div>
+  <details open>
+    <summary class="node" onclick="si('物质分为纯净物和混合物。分类依据：是否由同种物质组成。这是最基本的分类层级。')">🌐 物质</summary>
+    <details open>
+      <summary class="node" onclick="si('纯净物：由同种物质组成，有固定的组成和性质，可用化学式表示。')">纯净物</summary>
+      <details>
+        <summary class="node" onclick="si('单质：由同种元素组成的纯净物。注意：同素异形体（如O₂和O₃）混合是混合物，不是单质。')">单质</summary>
+        <details>
+          <summary class="node" onclick="si('金属单质：Fe、Cu、Na、Mg等。一般具有金属光泽、导电性、导热性、延展性。')">金属单质</summary>
+          <summary class="node" onclick="si('非金属单质：O₂、H₂、C、S、P等。性质差异大，无统一物理通性。')">非金属单质</summary>
+          <summary class="node" onclick="si('稀有气体：He、Ne、Ar等。化学性质极不活泼，以单原子形式存在。')">稀有气体</summary>
+        </details>
+        <summary class="node" onclick="si('化合物：由两种或两种以上不同元素组成的纯净物。')">化合物</summary>
+        <details>
+          <summary class="node" onclick="si('氧化物：由两种元素组成，其中一种为氧元素的化合物。\n• 酸性氧化物：CO₂、SO₂、SiO₂（能与碱反应生成盐和水）\n• 碱性氧化物：CaO、Na₂O、Fe₂O₃（能与酸反应生成盐和水）\n• 两性氧化物：Al₂O₃\n⚠ 金属氧化物不一定是碱性氧化物（如Mn₂O₇是酸性氧化物）')">氧化物</summary>
+          <summary class="node" onclick="si('酸：电离时产生的阳离子全部是H⁺的化合物。\n• 含氧酸：H₂SO₄、HNO₃、H₃PO₄\n• 无氧酸：HCl、H₂S\n• 一元酸/二元酸/多元酸：按电离出H⁺数目分')">酸</summary>
+          <summary class="node" onclick="si('碱：电离时产生的阴离子全部是OH⁻的化合物。\n• 强碱：NaOH、KOH、Ca(OH)₂、Ba(OH)₂\n• 弱碱：NH₃·H₂O、Fe(OH)₃、Cu(OH)₂')">碱</summary>
+          <summary class="node" onclick="si('盐：由金属阳离子（或NH₄⁺）和酸根阴离子组成的化合物。\n• 正盐：NaCl、Na₂SO₄\n• 酸式盐：NaHCO₃、NaHSO₄\n• 碱式盐：Cu₂(OH)₂CO₃')">盐</summary>
+        </details>
+      </details>
+      <summary class="node" onclick="si('混合物：由两种或多种物质混合而成，无固定组成，不能用单一化学式表示。')">混合物</summary>
+      <details>
+        <summary class="node" onclick="si('溶液：分散质粒子直径＜1nm，均一、稳定、透明。如NaCl溶液、蔗糖溶液。')">溶液（＜1nm）</summary>
+        <summary class="node" onclick="si('胶体：分散质粒子直径1~100nm，均一、较稳定。\n★ 本质特征是粒子大小，不是丁达尔效应！\n常见胶体：Fe(OH)₃胶体、淀粉溶液、豆浆、雾、烟、有色玻璃。')">胶体（1~100nm）</summary>
+        <summary class="node" onclick="si('浊液：分散质粒子直径＞100nm，不均一、不稳定。\n• 悬浊液：泥水\n• 乳浊液：油水混合物')">浊液（＞100nm）</summary>
+        <summary class="node" onclick="si('其他常见混合物：空气、石油、合金（钢、黄铜）、漂白粉、盐酸（HCl水溶液）、氨水。')">空气、合金、石油…</summary>
+      </details>
+    </details>
+  </details>
+  <div class="info blue" id="treeInfo">👆 点击上方任意节点，此处显示详细讲解。</div>
+</div>
+<div class="card">
+  <h2>🔄 交叉分类法示例</h2>
+  <div class="info green">
+    <b>Na₂CO₃（纯碱）</b>从不同角度可同时属于：<br>
+    • 按阳离子 → <b>钠盐</b><br>
+    • 按阴离子 → <b>碳酸盐</b><br>
+    • 按酸碱性 → <b>正盐</b><br>
+    • 按溶解性 → <b>可溶性盐</b><br>
+    💡 同一物质可以有多种分类归属，这就是<b>交叉分类法</b>的意义——弥补树状分类法单一标准的局限。
+  </div>
+</div>
+</section>
+
+<!-- ========== 实验1-1 胶体 ========== -->
+<section class="panel" id="t2">
+<div class="card">
+  <h2>🔬 实验1-1：Fe(OH)₃胶体的制备与丁达尔效应 <span class="badge">课本P8</span></h2>
+  <div class="goal">🎯 实验目的：掌握Fe(OH)₃胶体的正确制备方法；通过丁达尔效应区分溶液与胶体。<br>⚠ 操作要点：向<b>沸水</b>中滴加饱和FeCl₃溶液，继续煮沸至<b>红褐色</b>即停止加热。</div>
+  
+  <h3 style="font-size:14px;color:#0e7490;margin:10px 0 6px">第一步：选择制备条件</h3>
+  <div class="btns" id="prepBtns"></div>
+  <div class="info amber" id="prepInfo">请选择正确的制备操作组合。</div>
+  
+  <h3 style="font-size:14px;color:#0e7490;margin:10px 0 6px">第二步：丁达尔效应验证</h3>
+  <div class="btns">
+    <button class="btn pri" id="laserBtn" onclick="togLaser()">🔴 打开激光笔</button>
+  </div>
+  <canvas id="cv2" width="900" height="400"></canvas>
+  <div class="eqbox" id="gelEq">FeCl₃ + 3H₂O ==△== Fe(OH)₃(胶体) + 3HCl</div>
+  <div class="info blue">💡 <b>关键辨析</b>：丁达尔效应是区分胶体和溶液的<b>物理方法</b>，但胶体的<b>本质特征</b>是分散质粒子直径在1~100nm之间。胶体能透过滤纸，但不能透过半透膜。</div>
+</div>
+</section>
+
+<!-- ========== 实验1-2 导电性 ========== -->
+<section class="panel" id="t3">
+<div class="card">
+  <h2>💡 实验1-2：物质的导电性 <span class="badge">课本P14</span></h2>
+  <div class="goal">🎯 实验目的：通过导电性实验理解电解质的概念；观察灯泡亮度与离子浓度的关系；理解导电的本质是自由移动离子的定向移动。</div>
+  <div class="btns" id="condBtns"></div>
+  <div class="btns">
+    <button class="btn on" id="swBtn" onclick="togSw()">🔌 开关：闭合</button>
+  </div>
+  <canvas id="cv3" width="900" height="420"></canvas>
+  <div class="eqbox" id="condEq">← 请选择一种物质开始实验</div>
+  <div class="info blue" id="condNote">提示：导电的前提是存在<b>自由移动的带电粒子</b>。金属靠自由电子导电，电解质溶液靠自由移动的离子导电。</div>
+</div>
+<div class="card">
+  <h2>📋 电解质 vs 非电解质 判定表</h2>
+  <div class="info green" style="font-size:12px;line-height:2">
+    <table style="width:100%;border-collapse:collapse;font-size:12px">
+      <tr style="background:#dbeafe"><th style="padding:6px;border:1px solid #bfdbfe">类别</th><th style="padding:6px;border:1px solid #bfdbfe">定义</th><th style="padding:6px;border:1px solid #bfdbfe">典型物质</th><th style="padding:6px;border:1px solid #bfdbfe">注意</th></tr>
+      <tr><td style="padding:6px;border:1px solid #e2e8f0"><b>电解质</b></td><td style="padding:6px;border:1px solid #e2e8f0">在水溶液中<b>或</b>熔融状态下能导电的<b>化合物</b></td><td style="padding:6px;border:1px solid #e2e8f0">酸、碱、盐、H₂O、多数金属氧化物</td><td style="padding:6px;border:1px solid #e2e8f0">必须是化合物；导电的是其自身电离出的离子</td></tr>
+      <tr><td style="padding:6px;border:1px solid #e2e8f0"><b>非电解质</b></td><td style="padding:6px;border:1px solid #e2e8f0">在上述两种情况下都不能导电的<b>化合物</b></td><td style="padding:6px;border:1px solid #e2e8f0">酒精(C₂H₅OH)、蔗糖(C₁₂H₂₂O₁₁)、CO₂、SO₂、NH₃</td><td style="padding:6px;border:1px solid #e2e8f0">CO₂水溶液导电是因为生成了H₂CO₃，CO₂本身是非电解质</td></tr>
+      <tr><td style="padding:6px;border:1px solid #e2e8f0"><b>既不是也不是</b></td><td style="padding:6px;border:1px solid #e2e8f0">单质和混合物不属于此分类范畴</td><td style="padding:6px;border:1px solid #e2e8f0">Cu、石墨、NaCl溶液、盐酸</td><td style="padding:6px;border:1px solid #e2e8f0">电解质/非电解质只针对<b>纯净物中的化合物</b></td></tr>
+    </table>
+  </div>
+</div>
+</section>
+
+<!-- ========== 实验1-3 离子反应 ========== -->
+<section class="panel" id="t4">
+<div class="card">
+  <h2>🧫 实验1-3：离子反应 <span class="badge">课本P17-18</span></h2>
+  <div class="goal">🎯 实验目的：观察复分解型离子反应的现象（沉淀/气体/水）；掌握离子方程式"写→拆→删→查"四步书写法。</div>
+  <div class="btns" id="rxBtns"></div>
+  <div class="btns">
+    <button class="btn pri" onclick="doMix()">🫗 倾倒混合</button>
+    <button class="btn" onclick="resetMix()">♻️ 重置</button>
+  </div>
+  <canvas id="cv4" width="900" height="400"></canvas>
+  <div class="info amber" id="rxPhen">选择反应后点击"倾倒混合"观察现象。</div>
+  <div class="btns">
+    <button class="btn pri" onclick="nextSt()">▶ 显示下一步</button>
+    <button class="btn" onclick="rstSt()">↩ 清空步骤</button>
+  </div>
+  <div class="steps" id="rxSteps"></div>
+</div>
+<div class="card">
+  <h2>📝 离子方程式书写规则速查</h2>
+  <div class="info green" style="font-size:12px;line-height:2">
+    <b>可拆：</b>强酸(HCl/H₂SO₄/HNO₃)、强碱(NaOH/KOH/Ba(OH)₂/Ca(OH)₂)、可溶性盐<br>
+    <b>不可拆（保留化学式）：</b>沉淀↓、气体↑、H₂O、单质、氧化物、弱酸(CH₃COOH/H₂CO₃)、弱碱(NH₃·H₂O)<br>
+    <b>微溶物：</b>作反应物时若为澄清溶液则拆，若为浊液则不拆；作生成物时一律不拆（视为沉淀）<br>
+    ⚠ Ca(OH)₂：澄清石灰水→拆；石灰乳/悬浊液→不拆
+  </div>
+</div>
+</section>
+
+<!-- ========== 1.3 氧化还原 ========== -->
+<section class="panel" id="t5">
+<div class="card">
+  <h2>⚡ 氧化还原反应分析 <span class="badge">双线桥法</span></h2>
+  <div class="goal">🎯 学习目标：用化合价升降判断氧化还原反应；用双线桥标出电子转移方向和数目；准确判断氧化剂与还原剂。</div>
+  <div class="btns" id="redBtns"></div>
+  <div class="btns">
+    <button class="btn on" id="stB" onclick="togSt()">🔢 化合价：显示</button>
+    <button class="btn" id="brB" onclick="togBr()">🌉 双线桥：隐藏</button>
+  </div>
+  <canvas id="cv5" width="900" height="340"></canvas>
+  <div class="info blue" id="redInfo"></div>
+</div>
+<div class="card">
+  <h2>🔑 核心口诀与规律</h2>
+  <div class="info green" style="line-height:2.2">
+    <b>升失氧还，降得还氧：</b><br>
+    化合价<b>升</b>高 → <b>失</b>去电子 → 被<b>氧</b>化 → 作<b>还</b>原剂<br>
+    化合价<b>降</b>低 → <b>得</b>到电子 → 被<b>还</b>原 → 作<b>氧</b>化剂<br><br>
+    <b>四大基本反应类型与氧化还原的关系：</b><br>
+    • 置换反应 → <b>一定</b>是氧化还原反应<br>
+    • 复分解反应 → <b>一定不是</b>氧化还原反应<br>
+    • 化合反应 / 分解反应 → <b>可能是也可能不是</b>（看有无单质参与或生成≠判断依据，唯一依据是化合价是否变化）
+  </div>
+</div>
+</section>
+
+<footer>🧪 本实验室严格依据2019人教版必修第一册第一章编写 · 所有方程式与现象均经教材核对 · 仅供教学辅助使用</footer>
+
+<script>
+/* ===== 全局工具 ===== */
+const $=id=>document.getElementById(id);
+let act='t1';
+function go(t){act=t;document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('on',b.dataset.t===t));document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('on',p.id===t))}
+function si(s){$('treeInfo').innerHTML='💡 '+s.replace(/\n/g,'<br>')}
+const DPR=window.devicePixelRatio||1;
+function initCv(id,w,h){const c=$(id);c.width=w*DPR;c.height=h*DPR;c.style.width=w+'px';c.style.height=h+'px';const x=c.getContext('2d');x.scale(DPR,DPR);return x}
+const c2=initCv('cv2',900,400),c3=initCv('cv3',900,420),c4=initCv('cv4',900,400),c5=initCv('cv5',900,340);
+
+/* ===== 实验1-1 胶体 ===== */
+const preps=[
+  {id:'correct',label:'✅ 沸水 + 饱和FeCl₃ + 继续煮沸至红褐色',ok:true,
+   msg:'✔ 正确！得到红褐色Fe(OH)₃胶体。方程式：FeCl₃ + 3H₂O ==△== Fe(OH)₃(胶体) + 3HCl'},
+  {id:'cold',label:'❌ 冷水 + 饱和FeCl₃',ok:false,
+   msg:'✘ 错误！冷水条件下FeCl₃水解程度极小，无法形成胶体，只能得到黄色FeCl₃稀溶液。必须使用沸水提供足够能量促进水解。'},
+  {id:'stir',label:'❌ 沸水 + FeCl₃ + 持续搅拌',ok:false,
+   msg:'✘ 错误！过度搅拌会使胶体粒子碰撞聚沉，得到Fe(OH)₃沉淀而非胶体。正确操作是滴加后轻轻振荡或不搅拌，煮沸至红褐色即停。'},
+  {id:'naoh',label:'❌ 沸水 + NaOH溶液',ok:false,
+   msg:'✘ 错误！NaOH是强碱，直接与FeCl₃反应生成Fe(OH)₃沉淀：FeCl₃ + 3NaOH = Fe(OH)₃↓ + 3NaCl。制备胶体必须利用FeCl₃的水解，不能用强碱。'},
+  {id:'overboil',label:'❌ 沸水 + FeCl₃ + 长时间剧烈煮沸',ok:false,
+   msg:'✘ 错误！长时间煮沸会导致胶体聚沉，产生红褐色沉淀。应在液体变为红褐色后立即停止加热。'}
+];
+let gelOk=false,laserOn=false,gelParts=[],solParts=[];
+preps.forEach(p=>{
+  const b=document.createElement('button');b.className='btn'+(p.ok?'':' warn');b.textContent=p.label;
+  b.onclick=()=>{
+    document.querySelectorAll('#prepBtns .btn').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');
+    gelOk=p.ok;$('prepInfo').className='info '+(p.ok?'green':'red');$('prepInfo').innerHTML=p.msg;
+    initGelParts();
+  };
+  $('prepBtns').appendChild(b);
+});
+function togLaser(){laserOn=!laserOn;$('laserBtn').textContent=laserOn?'⚫ 关闭激光笔':'🔴 打开激光笔';$('laserBtn').classList.toggle('on',laserOn)}
+function initGelParts(){
+  solParts=[];for(let i=0;i<100;i++)solParts.push({x:130+Math.random()*170,y:170+Math.random()*180,vx:(Math.random()-.5)*1.5,vy:(Math.random()-.5)*1.5,r:1.2});
+  gelParts=[];if(gelOk)for(let i=0;i<50;i++)gelParts.push({x:570+Math.random()*170,y:170+Math.random()*180,vx:(Math.random()-.5)*.6,vy:(Math.random()-.5)*.6,r:3});
+}
+initGelParts();
+function drawBeaker(ctx,x,label,liqCol,parts,type,t){
+  const W=180,T=140,B=350;
+  ctx.fillStyle=liqCol;ctx.fillRect(x+5,T+45,W-10,B-T-50);
+  parts.forEach(p=>{
+    if(type==='gel'){p.vx+=(Math.random()-.5)*.3;p.vy+=(Math.random()-.5)*.3;p.vx=Math.max(-.8,Math.min(.8,p.vx));p.vy=Math.max(-.8,Math.min(.8,p.vy))}
+    p.x+=p.vx;p.y+=p.vy;
+    if(p.x<x+8+p.r){p.x=x+8+p.r;p.vx*=-1}if(p.x>x+W-8-p.r){p.x=x+W-8-p.r;p.vx*=-1}
+    if(p.y<T+50+p.r){p.y=T+50+p.r;p.vy*=-1}if(p.y>B-8-p.r){p.y=B-8-p.r;p.vy*=-1}
+    ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,7);
+    ctx.fillStyle=type==='sol'?'rgba(30,80,160,.5)':'rgba(160,60,20,.65)';ctx.fill();
+  });
+  ctx.strokeStyle='#64748b';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(x,T);ctx.lineTo(x,B-12);
+  ctx.quadraticCurveTo(x,B,x+12,B);ctx.lineTo(x+W-12,B);ctx.quadraticCurveTo(x+W,B,x+W,B-12);ctx.lineTo(x+W,T);ctx.stroke();
+  ctx.fillStyle='#0f172a';ctx.font='13px sans-serif';ctx.textAlign='center';ctx.fillText(label,x+W/2,B+22);
+}
+function drawGel(t){
+  c2.clearRect(0,0,900,400);c2.fillStyle='#f8fafc';c2.fillRect(0,0,900,400);
+  drawBeaker(c2,130,'CuSO₄溶液','rgba(100,180,255,.3)',solParts,'sol',t);
+  const gc=gelOk?'rgba(180,80,30,.3)':'rgba(200,180,50,.25)';
+  const gl=gelOk?'Fe(OH)₃胶体（正确制备）':'FeCl₃溶液（制备失败）';
+  drawBeaker(c2,570,gl,gc,gelOk?gelParts:solParts.map(p=>({...p,x:p.x+440})),gelOk?'gel':'sol',t);
+  const by=255;
+  if(laserOn){
+    c2.fillStyle='#dc2626';c2.fillRect(25,by-8,50,16);c2.fillStyle='#fff';c2.font='9px sans-serif';c2.textAlign='center';c2.fillText('LASER',50,by+3);
+    // 溶液光束（几乎不可见）
+    c2.strokeStyle='rgba(255,50,50,.15)';c2.lineWidth=2;c2.beginPath();c2.moveTo(75,by);c2.lineTo(310,by);c2.stroke();
+    // 胶体光束
+    if(gelOk){
+      c2.strokeStyle='rgba(255,50,50,.5)';c2.lineWidth=2;c2.beginPath();c2.moveTo(75,by);c2.lineTo(575,by);c2.stroke();
+      const g=c2.createLinearGradient(575,by-12,575,by+12);g.addColorStop(0,'rgba(255,240,200,0)');g.addColorStop(.5,'rgba(255,245,210,.9)');g.addColorStop(1,'rgba(255,240,200,0)');
+      c2.fillStyle=g;c2.fillRect(575,by-10,170,20);
+      for(let i=0;i<12;i++){c2.beginPath();c2.arc(580+Math.random()*160,by+(Math.random()-.5)*14,1.3,0,7);c2.fillStyle='rgba(255,255,230,.85)';c2.fill()}
+      c2.fillStyle='#b45309';c2.font='bold 13px sans-serif';c2.fillText('✨ 光亮通路（丁达尔效应）',660,by-22);
+    }else{
+      c2.strokeStyle='rgba(255,50,50,.15)';c2.lineWidth=2;c2.beginPath();c2.moveTo(75,by);c2.lineTo(750,by);c2.stroke();
+      c2.fillStyle='#dc2626';c2.font='13px sans-serif';c2.fillText('无明显光路（非胶体）',660,by-22);
+    }
+  }else{
+    c2.fillStyle='#94a3b8';c2.font='14px sans-serif';c2.textAlign='center';c2.fillText('👆 先选择制备条件，再打开激光笔验证',450,80);
+  }
+}
+
+/* ===== 实验1-2 导电性 ===== */
+const CD={
+  nacl_s:{n:'干燥NaCl固体',lv:0,ion:null,solid:1,eq:'NaCl固体中有Na⁺和Cl⁻，但不能自由移动 → 不导电',note:'NaCl是电解质！固体不导电≠非电解质。'},
+  nacl_aq:{n:'NaCl溶液',lv:.92,ion:'NaCl',eq:'NaCl = Na⁺ + Cl⁻ → 自由离子定向移动，灯泡明亮',note:'盐类都是电解质。'},
+  nacl_m:{n:'熔融NaCl',lv:.92,ion:'NaCl',hot:1,eq:'NaCl(熔融) = Na⁺ + Cl⁻ → 高温使离子挣脱晶格束缚',note:'熔融态导电是离子化合物的特征。'},
+  hcl:{n:'稀盐酸',lv:.88,ion:'HCl',eq:'HCl = H⁺ + Cl⁻ → 强酸完全电离',note:'HCl气体本身不导电，溶于水才导电。HCl是电解质。'},
+  naoh:{n:'NaOH溶液',lv:.88,ion:'NaOH',eq:'NaOH = Na⁺ + OH⁻ → 强碱完全电离',note:'NaOH是强电解质。'},
+  ch3cooh:{n:'CH₃COOH溶液',lv:.25,ion:'CH3COOH',few:1,eq:'CH₃COOH ⇌ CH₃COO⁻ + H⁺ → 弱酸部分电离，离子少',note:'醋酸是弱电解质，灯泡较暗。强弱电解质的区别在于电离程度，不在于溶解度。'},
+  alcohol:{n:'酒精(C₂H₅OH)',lv:0,ion:null,eq:'酒精以分子形式存在，不发生电离 → 无离子，不导电',note:'酒精是非电解质。'},
+  sugar:{n:'蔗糖溶液',lv:0,ion:null,eq:'蔗糖以分子形式分散，不电离 → 不导电',note:'蔗糖是非电解质。'}
+};
+let cc='nacl_aq',swOn=true,cIons=[];
+Object.keys(CD).forEach(k=>{const b=document.createElement('button');b.className='btn';b.textContent=CD[k].n;b.dataset.k=k;b.onclick=()=>setC(k);$('condBtns').appendChild(b)});
+function setC(k){cc=k;document.querySelectorAll('#condBtns .btn').forEach(b=>b.classList.toggle('sel',b.dataset.k===k));const d=CD[k];$('condEq').textContent=d.eq;$('condNote').innerHTML='💡 '+d.note;mkIons(d)}
+function mkIons(d){cIons=[];if(!d.ion)return;const n=d.few?6:28;for(let i=0;i<n;i++)cIons.push({x:575+Math.random()*190,y:210+Math.random()*150,c:i%2?1:-1})}
+function togSw(){swOn=!swOn;$('swBtn').textContent=swOn?'🔌 开关：闭合':'🔌 开关：断开';$('swBtn').classList.toggle('on',swOn)}
+setC('nacl_aq');
+function drawCond(t){
+  const d=CD[cc],lit=swOn?d.lv:0;
+  c3.clearRect(0,0,900,420);c3.fillStyle='#f8fafc';c3.fillRect(0,0,900,420);
+  // 导线
+  c3.strokeStyle='#475569';c3.lineWidth=2.5;
+  c3.beginPath();c3.moveTo(130,265);c3.lineTo(130,88);c3.lineTo(630,88);c3.lineTo(630,172);c3.stroke();
+  c3.beginPath();c3.moveTo(710,172);c3.lineTo(710,58);c3.lineTo(855,58);c3.lineTo(855,388);c3.lineTo(130,388);c3.lineTo(130,318);c3.stroke();
+  // 电池
+  c3.lineWidth=3;c3.beginPath();c3.moveTo(105,268);c3.lineTo(155,268);c3.stroke();
+  c3.lineWidth=5;c3.beginPath();c3.moveTo(118,285);c3.lineTo(142,285);c3.stroke();
+  c3.lineWidth=3;c3.beginPath();c3.moveTo(105,302);c3.lineTo(155,302);c3.stroke();
+  c3.lineWidth=5;c3.beginPath();c3.moveTo(118,319);c3.lineTo(142,319);c3.stroke();
+  c3.fillStyle='#334155';c3.font='12px sans-serif';c3.textAlign='center';c3.fillText('+',166,272);c3.fillText('−',166,323);
+  // 开关
+  c3.beginPath();c3.arc(240,88,4,0,7);c3.arc(300,88,4,0,7);c3.fillStyle='#334155';c3.fill();
+  c3.lineWidth=3;c3.beginPath();c3.moveTo(240,88);swOn?c3.lineTo(300,88):c3.lineTo(290,60);c3.stroke();
+  // 灯泡
+  if(lit>.05){const g=c3.createRadialGradient(450,88,3,450,88,65);g.addColorStop(0,`rgba(255,220,80,${.9*lit})`);g.addColorStop(1,'rgba(255,220,80,0)');c3.fillStyle=g;c3.beginPath();c3.arc(450,88,65,0,7);c3.fill()}
+  c3.beginPath();c3.arc(450,88,22,0,7);c3.fillStyle=lit>.05?'#fde68a':'#e2e8f0';c3.fill();c3.strokeStyle='#475569';c3.lineWidth=2;c3.stroke();
+  c3.beginPath();c3.moveTo(438,98);c3.lineTo(444,82);c3.lineTo(450,98);c3.lineTo(456,82);c3.lineTo(462,98);c3.strokeStyle=lit>.05?'#d97706':'#94a3b8';c3.stroke();
+  c3.fillStyle='#475569';c3.font='12px sans-serif';c3.fillText('灯泡',450,132);
+  // 烧杯
+  const BX=560,BW=220,BT=162,BB=382;
+  if(d.solid){
+    c3.fillStyle='#e5e7eb';c3.beginPath();c3.moveTo(BX+10,BB-6);c3.quadraticCurveTo(BX+BW/2,BB-50,BX+BW-10,BB-6);c3.fill();
+    c3.fillStyle='#64748b';c3.font='13px sans-serif';c3.fillText('白色固体（离子不能自由移动）',BX+BW/2,BB-18);
+  }else{
+    c3.fillStyle=d.hot?'rgba(255,165,80,.35)':d.n.includes('盐酸')?'rgba(200,240,210,.4)':d.n.includes('醋酸')?'rgba(220,240,220,.35)':'rgba(160,215,255,.4)';
+    c3.fillRect(BX+6,BT+45,BW-12,BB-BT-50);
+    if(d.hot){for(let i=0;i<5;i++){const fx=BX+40+i*34,fy=BB+14;c3.beginPath();c3.moveTo(fx,fy+10);c3.quadraticCurveTo(fx-7,fy,fx,fy-9-Math.sin(t/100+i)*4);c3.quadraticCurveTo(fx+7,fy,fx,fy+10);c3.fillStyle=i%2?'#f97316':'#fbbf24';c3.fill()}c3.fillStyle='#b45309';c3.font='12px sans-serif';c3.fillText('🔥 加热熔融',BX+BW/2,BB+40)}
+    const cond=swOn&&d.lv>.05;
+    cIons.forEach(o=>{
+      if(cond){o.x+=o.c>0?.9:-.9;if(o.c>0&&o.x>706)o.x=576+Math.random()*15;if(o.c<0&&o.x<636)o.x=744-Math.random()*15}
+      else{o.x+=(Math.random()-.5)*.5;o.y+=(Math.random()-.5)*.5}
+      o.x=Math.max(572,Math.min(748,o.x));o.y=Math.max(210,Math.min(362,o.y));
+      c3.beginPath();c3.arc(o.x,o.y,8,0,7);c3.fillStyle=o.c>0?'#ef4444':'#10b981';c3.fill();
+      c3.fillStyle='#fff';c3.font='bold 10px sans-serif';c3.fillText(o.c>0?'+':'−',o.x,o.y+4);
+    });
+  }
+  c3.fillStyle='#78716c';c3.fillRect(624,172,12,158);c3.fillRect(704,172,12,158);
+  c3.fillStyle='#334155';c3.font='12px sans-serif';c3.fillText('阳极(+)',630,165);c3.fillText('阴极(−)',710,165);
+  c3.strokeStyle='#64748b';c3.lineWidth=3;c3.beginPath();c3.moveTo(BX,BT);c3.lineTo(BX,BB-12);c3.quadraticCurveTo(BX,BB,BX+12,BB);c3.lineTo(BX+BW-12,BB);c3.quadraticCurveTo(BX+BW,BB,BX+BW,BB-12);c3.lineTo(BX+BW,BT);c3.stroke();
+  c3.fillStyle='#0f172a';c3.font='14px sans-serif';c3.textAlign='center';c3.fillText(d.n,BX+BW/2,BB+28);
+  c3.fillStyle=lit>.3?'#16a34a':lit>.05?'#d97706':'#dc2626';c3.font='13px sans-serif';
+  c3.fillText(lit>.3?'✔ 导电（灯泡亮)':lit>.05?'⚠ 微弱导电（灯泡暗）':'✘ 不导电',BX+BW/2,BB+46);
+}
+
+/* ===== 实验1-3 离子反应 ===== */
+const RX=[
+  {n:'Na₂SO₄ + BaCl₂',a:'#e3f2fd',b:'#fefce8',m:'#f0f6fb',ph:'🌫 现象：立即产生大量白色沉淀（BaSO₄），该沉淀不溶于稀硝酸。',
+   pr:{c:'#ffffff',e:'#cbd5e1',n:130},gas:0,
+   st:['<b>①写：</b>Na₂SO₄ + BaCl₂ = BaSO₄↓ + 2NaCl',
+       '<b>②拆：</b>2Na⁺ + SO₄²⁻ + Ba²⁺ + 2Cl⁻ = BaSO₄↓ + <span class="spect">2Na⁺</span> + <span class="spect">2Cl⁻</span>',
+       '<b>③删：</b>删去旁观离子 <span class="spect">Na⁺、Cl⁻</span>（未参加反应）',
+       '<b>④查：</b><span class="hl">Ba²⁺ + SO₄²⁻ = BaSO₄↓</span> ✓ 原子守恒、电荷守恒']},
+  {n:'NaOH + HCl',a:'#eff6ff',b:'#eff6ff',m:'#eff6ff',ph:'👀 现象：无明显外观变化，但反应确实发生（生成水）。可用酚酞指示剂辅助验证。',
+   pr:null,gas:0,
+   st:['<b>①写：</b>NaOH + HCl = NaCl + H₂O',
+       '<b>②拆：</b>Na⁺ + OH⁻ + H⁺ + Cl⁻ = <span class="spect">Na⁺</span> + <span class="spect">Cl⁻</span> + H₂O',
+       '<b>③删：</b>删去旁观离子 <span class="spect">Na⁺、Cl⁻</span>',
+       '<b>④查：</b><span class="hl">H⁺ + OH⁻ = H₂O</span> ✓ 代表一切强酸强碱中和']},
+  {n:'AgNO₃ + NaCl',a:'#f8fafc',b:'#f8fafc',m:'#f4f6f8',ph:'🌫 现象：产生白色沉淀（AgCl），不溶于稀硝酸。这是检验Cl⁻的方法。',
+   pr:{c:'#f8fafc',e:'#94a3b8',n:120},gas:0,
+   st:['<b>①写：</b>AgNO₃ + NaCl = AgCl↓ + NaNO₃',
+       '<b>②拆：</b>Ag⁺ + <span class="spect">NO₃⁻</span> + <span class="spect">Na⁺</span> + Cl⁻ = AgCl↓ + <span class="spect">Na⁺</span> + <span class="spect">NO₃⁻</span>',
+       '<b>③删：</b>删去旁观离子 <span class="spect">Na⁺、NO₃⁻</span>',
+       '<b>④查：</b><span class="hl">Ag⁺ + Cl⁻ = AgCl↓</span> ✓']},
+  {n:'Na₂CO₃ + HCl',a:'#f0fdf4',b:'#fefce8',m:'#f7fbf2',ph:'🫧 现象：产生大量无色气泡（CO₂），将气体通入澄清石灰水变浑浊。',
+   pr:null,gas:1,
+   st:['<b>①写：</b>Na₂CO₃ + 2HCl = 2NaCl + H₂O + CO₂↑',
+       '<b>②拆：</b>2Na⁺ + CO₃²⁻ + 2H⁺ + <span class="spect">2Cl⁻</span> = <span class="spect">2Na⁺</span> + <span class="spect">2Cl⁻</span> + H₂O + CO₂↑',
+       '<b>③删：</b>删去旁观离子 <span class="spect">Na⁺、Cl⁻</span>',
+       '<b>④查：</b><span class="hl">CO₃²⁻ + 2H⁺ = H₂O + CO₂↑</span> ✓']},
+  {n:'CuSO₄ + NaOH',a:'#bfdbfe',b:'#eff6ff',m:'#dbeafe',ph:'🔵 现象：产生蓝色絮状沉淀Cu(OH)₂。',
+   pr:{c:'#60a5fa',e:'#2563eb',n:110},gas:0,
+   st:['<b>①写：</b>CuSO₄ + 2NaOH = Cu(OH)₂↓ + Na₂SO₄',
+       '<b>②拆：</b>Cu²⁺ + <span class="spect">SO₄²⁻</span> + <span class="spect">2Na⁺</span> + 2OH⁻ = Cu(OH)₂↓ + <span class="spect">2Na⁺</span> + <span class="spect">SO₄²⁻</span>',
+       '<b>③删：</b>删去旁观离子 <span class="spect">Na⁺、SO₄²⁻</span>',
+       '<b>④查：</b><span class="hl">Cu²⁺ + 2OH⁻ = Cu(OH)₂↓</span> ✓']}
+];
+let ri=0,mxP=0,mxing=false,prcs=[],bubs=[],curC=null;
+RX.forEach((r,i)=>{const b=document.createElement('button');b.className='btn';b.textContent=r.n;b.dataset.i=i;b.onclick=()=>setR(i);$('rxBtns').appendChild(b)});
+function h2r(h){return[parseInt(h.slice(1,3),16),parseInt(h.slice(3,5),16),parseInt(h.slice(5,7),16)]}
+function setR(i){ri=i;mxP=0;mxing=false;prcs=[];bubs=[];curC=h2r(RX[i].a);document.querySelectorAll('#rxBtns .btn').forEach(b=>b.classList.toggle('sel',+b.dataset.i===i));$('rxPhen').textContent='已选：'+RX[i].n+'，点击"倾倒混合"。';rstSt()}
+function doMix(){if(!mxing){mxing=true;mxP=.001;$('rxPhen').textContent='🫗 正在倾倒……'}}
+function resetMix(){setR(ri)}
+let sI=0;function rstSt(){sI=0;$('rxSteps').innerHTML=''}
+function nextSt(){const r=RX[ri];if(sI>=r.st.length)return;const d=document.createElement('div');d.className='step show';d.innerHTML=r.st[sI];$('rxSteps').appendChild(d);sI++}
+setR(0);
+function drawRx(t){
+  const r=RX[ri];c4.clearRect(0,0,900,400);c4.fillStyle='#f8fafc';c4.fillRect(0,0,900,400);
+  if(mxing){mxP=Math.min(1,mxP+.013);if(mxP>=1){mxing=false;$('rxPhen').textContent=r.ph}
+    const tg=h2r(r.m);curC=curC.map((v,i)=>v+(tg[i]-v)*.025);
+    if(r.pr&&mxP>.3&&prcs.length<r.pr.n&&Math.random()<.7)prcs.push({x:345+Math.random()*210,y:165+Math.random()*50,vy:.5+Math.random()*.8,rest:358-Math.random()*20,r:1.5+Math.random()*2.5});
+    if(r.gas&&mxP>.3&&Math.random()<.4)bubs.push({x:345+Math.random()*210,y:355,r:2+Math.random()*3.5,v:.9+Math.random()*1.3});
+  }
+  c4.fillStyle=`rgb(${curC.map(Math.round)})`;c4.fillRect(336,165,228,200);
+  prcs.forEach(p=>{if(p.y<p.rest)p.y+=p.vy;c4.beginPath();c4.arc(p.x,p.y,p.r,0,7);c4.fillStyle=r.pr.c;c4.fill();c4.strokeStyle=r.pr.e;c4.lineWidth=.6;c4.stroke()});
+  bubs=bubs.filter(b=>b.y>168);bubs.forEach(b=>{b.y-=b.v;c4.beginPath();c4.arc(b.x,b.y,b.r,0,7);c4.strokeStyle='rgba(255,255,255,.9)';c4.lineWidth=1.2;c4.stroke();c4.fillStyle='rgba(255,255,255,.2)';c4.fill()});
+  if(mxing&&mxP<.35){c4.strokeStyle=`rgba(${h2r(r.b)},.8)`;c4.lineWidth=5;c4.beginPath();c4.moveTo(530,118);c4.lineTo(530,168);c4.stroke();
+    c4.save();c4.translate(558,95);c4.rotate(-.55);c4.strokeStyle='#64748b';c4.lineWidth=2.5;c4.strokeRect(-26,-22,52,44);c4.fillStyle=`rgba(${h2r(r.b)},.7)`;c4.fillRect(-22,-4,44,24);c4.restore()}
+  c4.strokeStyle='#64748b';c4.lineWidth=3;c4.beginPath();c4.moveTo(330,130);c4.lineTo(330,358);c4.quadraticCurveTo(330,370,342,370);c4.lineTo(558,370);c4.quadraticCurveTo(570,370,570,358);c4.lineTo(570,130);c4.stroke();
+  c4.fillStyle='#0f172a';c4.font='14px sans-serif';c4.textAlign='center';c4.fillText(r.n,450,392);
+  c4.textAlign='left';c4.font='12px sans-serif';c4.fillStyle='#475569';
+  ['复分解型离子反应发生条件：','✔ 生成沉淀 ↓','✔ 生成气体 ↑','✔ 生成难电离物质（如H₂O）','三者至少满足其一。'].forEach((h,i)=>c4.fillText(h,640,150+i*24));
+}
+
+/* ===== 1.3 氧化还原 ===== */
+const OC='#ea580c',RC='#2563eb',GC='#64748b';
+const RD=[
+  {n:'2Na + Cl₂ ==点燃== 2NaCl',
+   seg:[{t:'2Na',x:140},{t:'+',x:245},{t:'Cl₂',x:370},{t:'=',x:510,c:'点燃'},{t:'2NaCl',x:690}],
+   st:[{x:150,t:'0',c:OC},{x:370,t:'0',c:RC},{x:668,t:'+1',c:OC},{x:706,t:'−1',c:RC}],
+   br:[{x1:150,x2:668,s:'top',c:OC,l:'失去2×e⁻，化合价升高，被氧化'},{x1:370,x2:706,s:'bot',c:RC,l:'得到2×e⁻，化合价降低，被还原'}],
+   info:'还原剂：<b>Na</b>（失电子，被氧化）；氧化剂：<b>Cl₂</b>（得电子，被还原）。化合反应，也是氧化还原反应。'},
+  {n:'Zn + CuSO₄ = ZnSO₄ + Cu',
+   seg:[{t:'Zn',x:110},{t:'+',x:205},{t:'CuSO₄',x:350},{t:'=',x:500},{t:'ZnSO₄',x:640},{t:'+',x:760},{t:'Cu',x:830}],
+   st:[{x:110,t:'0',c:OC},{x:320,t:'+2',c:RC},{x:610,t:'+2',c:OC},{x:830,t:'0',c:RC}],
+   br:[{x1:110,x2:610,s:'top',c:OC,l:'失去2e⁻，化合价升高，被氧化'},{x1:320,x2:830,s:'bot',c:RC,l:'得到2e⁻，化合价降低，被还原'}],
+   info:'还原剂：<b>Zn</b>；氧化剂：<b>CuSO₄(Cu²⁺)</b>。置换反应一定是氧化还原反应。'},
+  {n:'Fe₂O₃ + 3CO ==高温== 2Fe + 3CO₂',
+   seg:[{t:'Fe₂O₃',x:150},{t:'+',x:290},{t:'3CO',x:410},{t:'=',x:535,c:'高温'},{t:'2Fe',x:640},{t:'+',x:730},{t:'3CO₂',x:820}],
+   st:[{x:130,t:'+3',c:RC},{x:402,t:'+2',c:OC},{x:640,t:'0',c:RC},{x:810,t:'+4',c:OC}],
+   br:[{x1:130,x2:640,s:'top',c:RC,l:'得到2×3e⁻，化合价降低，被还原'},{x1:402,x2:810,s:'bot',c:OC,l:'失去3×2e⁻，化合价升高，被氧化'}],
+   info:'氧化剂：<b>Fe₂O₃</b>；还原剂：<b>CO</b>。工业炼铁核心反应。得失电子总数相等（守恒）。'},
+  {n:'CaCO₃ ==高温== CaO + CO₂↑',
+   seg:[{t:'CaCO₃',x:210},{t:'=',x:410,c:'高温'},{t:'CaO',x:550},{t:'+',x:660},{t:'CO₂↑',x:770}],
+   st:[{x:175,t:'+2',c:GC},{x:222,t:'+4',c:GC},{x:258,t:'−2',c:GC},{x:530,t:'+2',c:GC},{x:570,t:'−2',c:GC},{x:758,t:'+4',c:GC},{x:800,t:'−2',c:GC}],
+   br:[],
+   info:'⚠ 所有元素化合价均未改变 → 该分解反应<b>不是</b>氧化还原反应。判断依据只能是化合价是否变化，不能看是否有单质。'}
+];
+let rc=0,shSt=true,shBr=false;
+RD.forEach((r,i)=>{const b=document.createElement('button');b.className='btn';b.textContent=r.n;b.dataset.i=i;b.onclick=()=>setRd(i);$('redBtns').appendChild(b)});
+function setRd(i){rc=i;document.querySelectorAll('#redBtns .btn').forEach(b=>b.classList.toggle('sel',+b.dataset.i===i));$('redInfo').innerHTML=RD[i].info}
+function togSt(){shSt=!shSt;$('stB').textContent='🔢 化合价：'+(shSt?'显示':'隐藏');$('stB').classList.toggle('on',shSt)}
+function togBr(){shBr=!shBr;$('brB').textContent='🌉 双线桥：'+(shBr?'显示':'隐藏');$('brB').classList.toggle('on',shBr)}
+function drawBr(x1,x2,s,col,lb){
+  const y0=s==='top'?148:248,dy=s==='top'?-50:50;
+  c5.strokeStyle=col;c5.lineWidth=2.2;c5.beginPath();c5.moveTo(x1,y0);c5.quadraticCurveTo((x1+x2)/2,y0+dy,x2,y0);c5.stroke();
+  c5.beginPath();c5.moveTo(x1,y0);c5.lineTo(x1,y0+(s==='top'?20:-12));c5.stroke();
+  const dir=s==='top'?1:-1;c5.beginPath();c5.moveTo(x2,y0+dir*9);c5.lineTo(x2-5,y0-dir*2);c5.lineTo(x2+5,y0-dir*2);c5.closePath();c5.fillStyle=col;c5.fill();
+  c5.fillStyle=col;c5.font='12px sans-serif';c5.textAlign='center';c5.fillText(lb,(x1+x2)/2,y0+dy+(s==='top'?-10:20));
+}
+function drawRed(){
+  const r=RD[rc];c5.clearRect(0,0,900,340);c5.fillStyle='#f8fafc';c5.fillRect(0,0,900,340);
+  c5.fillStyle='#0f172a';c5.font='bold 22px sans-serif';c5.textAlign='center';
+  r.seg.forEach(s=>{c5.fillText(s.t,s.x,215);if(s.c){c5.save();c5.font='12px sans-serif';c5.fillStyle='#7c3aed';c5.fillText(s.c,s.x,178);c5.restore()}});
+  if(shSt)r.st.forEach(s=>{c5.fillStyle=s.c;c5.font='bold 14px sans-serif';c5.fillText(s.t,s.x,174);c5.fillRect(s.x-11,180,22,1.5)});
+  if(shBr)r.br.forEach(b=>drawBr(b.x1,b.x2,b.s,b.c,b.l));
+  if(!r.br.length&&shBr){c5.fillStyle='#dc2626';c5.font='bold 14px sans-serif';c5.fillText('⚠ 无化合价变化 → 不是氧化还原反应，无法画双线桥',450,78)}
+  c5.textAlign='left';c5.font='12px sans-serif';c5.fillStyle=OC;c5.fillText('● 氧化（失电子，化合价升高）',640,318);c5.fillStyle=RC;c5.fillText('● 还原（得电子，化合价降低）',640,336);
+}
+setRd(0);
+
+/* ===== 主循环 ===== */
+(function loop(t){
+  if(act==='t2')drawGel(t);
+  if(act==='t3')drawCond(t);
+  if(act==='t4')drawRx(t);
+  if(act==='t5')drawRed();
+  requestAnimationFrame(loop);
+})(0);
+</script>
+</body>
+</html>
